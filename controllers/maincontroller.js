@@ -50,12 +50,20 @@ const index = router.get('/', (req, res) => {
     });
 });
 
-const productDetails = router.get('/product-details', (req, res) => {
+const productDetailsPage = router.get('/product-details', (req, res) => {
     res.render('./shop/product-detail', {
         docTitle: 'Product Details',
         path: '/product-details'
     });
 });
+
+const productDetails=router.get('/product-details/:productid',(req,res)=>{
+    const prodID=req.params.productid;
+    Products.findbyId(prodID,product=>{
+        console.log(product);
+    })
+    res.redirect('/');
+})
 
 const pageerror = router.use((req, res) => {
     res.status(404).render('pagenotFound', {
@@ -70,5 +78,6 @@ module.exports = {
     cart,
     index,
     productDetails,
+    productDetailsPage,
     pageerror
 };

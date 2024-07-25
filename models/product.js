@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-
+let id=0;
 let products = [];
 
 module.exports = class Product {
@@ -12,6 +12,7 @@ module.exports = class Product {
     }
 
     save() {
+        this.id=Math.random().toString();
         const p = path.join(__dirname, '..', 'data', 'products.json');
 
         fs.readFile(p, (err, filecontent) => {
@@ -42,5 +43,11 @@ module.exports = class Product {
                 cb(content);
             }
         });
+    }
+    static findbyId(id,cb){
+        this.fetchAll(products=>{
+            const product=products.find(p=>p.id===id);
+            cb(product);
+        })
     }
 }

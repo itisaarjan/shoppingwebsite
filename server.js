@@ -22,6 +22,7 @@ app.use(controller.addProductPage);
 app.use(controller.addProduct);
 app.use(controller.cart);
 app.use(controller.adminpage);
+app.use(controller.productDetailsPage);
 app.use(controller.productDetails);
 app.use(controller.shopPage);
 
