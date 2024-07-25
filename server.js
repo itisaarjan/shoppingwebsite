@@ -2,19 +2,13 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
-const pageerror=require('./controllers/pagenotFound');
 
-app.set('view engine','ejs');
-app.set('views','views');
-
+// Set view engine
+app.set('view engine', 'ejs');
+app.set('views', 'views');
 
 // Import routes
-const home=require('./routes/index');
-const addProductRoutes = require('./routes/add-product.js');
-const shopRoutes = require('./routes/shop.js');
-const productDetails = require('./routes/product-details.js');
-const cart=require('./routes/cart');
-const adminProduct=require('./routes/adminProduct');
+const controller = require('./controllers/maincontroller');
 
 // Middleware for static files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -23,15 +17,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Route handling
-app.use(home);
-app.use(addProductRoutes.routes);
-app.use(cart);
-app.use(adminProduct);
-app.use(productDetails);
-app.use(shopRoutes);
+app.use(controller.index);
+app.use(controller.addProductPage);
+app.use(controller.addProduct);
+app.use(controller.cart);
+app.use(controller.adminpage);
+app.use(controller.productDetails);
+app.use(controller.shopPage);
 
 // 404 Page not found handler
-app.use(pageerror.err);
+app.use(controller.pageerror);
 
 // Start the server
 app.listen(3000, () => {
