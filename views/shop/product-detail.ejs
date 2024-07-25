@@ -1,0 +1,27 @@
+<%-include('../includes/head.ejs')%>
+    <title><%=docTitle%></title>
+    <link rel="stylesheet" href="shop.css">
+</head>
+<body>
+    <header>
+        <nav class="nav-bar">
+            <div>
+                <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/product-list">Shop</a></li>
+                <li><a href="/add-product">Add Products</a></li>
+                <li><a  class="<%= path==='/product-details' ? 'active' : '' %>"href="/product-details">Product Details</a></li>
+                <li><a href="/admin-product">Admin Product</a></li>
+
+            </ul>
+            </div>
+            <div class="cart-icon">
+                <ul><li><a href="/cart"><img src="/assets/shoppingcart.png" alt="Cart"></a></li></ul>
+            </div>
+        </nav>
+    </header>    
+    <main class="main-body">
+        
+    </main>
+</body>
+</html>

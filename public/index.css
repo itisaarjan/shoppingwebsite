@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f1faee;
+}
+
+.nav-bar {
+    background-color: #006466;
+    width: 100%;
+    margin-top: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    color: white;
+    height: 30%;
+}
+
+.nav-bar ul {
+    display: flex;
+    justify-content: start;
+    gap: 20px;
+    list-style: none;
+    font-weight: 100;
+    padding: 10px;
+}
+
+.nav-bar a {
+    text-decoration: none;
+    border: none;
+    font-size: 25px;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+}
+
+.nav-bar ul li {
+    list-style: none;
+}
+
+.cart-icon {
+    width: 80px;
+    height: 70px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.cart-icon img {
+    width: 100%;
+    height: 100%;
+    /* Apply the filter to change the color to white */
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+
+a:hover,
+.active {
+    color: gold;
+}
+
+.main-body {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-title {
+    font-size: 75px;
+}
+
+.main-container {
+    width: 150vw;
+    height: 50vh;
+    background-color: white;
+}
+
+.main-container img {
+    width: 100%;
+    height: 100%;
+}

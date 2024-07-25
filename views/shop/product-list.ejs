@@ -1,0 +1,53 @@
+<%-include('../includes/head.ejs')%>
+    <title><%=docTitle%></title>
+    <link rel="stylesheet" href="shop.css">
+</head>
+<body>
+    <header>
+       <nav class="nav-bar">
+            <div>
+                <ul>
+                <li><a href="/">Home</a></li>
+                <li><a class="<%= path==='/product-list' ? 'active' : '' %>" href="/product-list">Shop</a></li>
+                <li><a href="/add-product">Add Products</a></li>
+                <li><a href="/product-details">Product Details</a></li>
+                <li><a href="/admin-product">Admin Product</a></li>
+
+            </ul>
+            </div>
+            <div class="cart-icon">
+                <ul><li><a href="/cart"><img src="/assets/shoppingcart.png" alt="Cart"></a></li></ul>
+            </div>
+        </nav>
+    </header>    
+    <main class="main-body">
+        <h1>My Products</h1>
+        <p>List of all products....</p>
+        <%if (product.length>0){%>
+            <div class="grid">
+            <%for (let i=0; i<product.length; i++){%>
+            <article class="card product-item">
+                <header class="card__header">
+                    <h1 class="product__title"><%=product[i].title%></h1>
+                </header>
+                <div class="card__image">
+                    <img src="<%=product[i].imageUrl%>" alt="A Book">
+                </div>
+                <div class="card__content">
+                    <h2 class="product__price">$<%=product[i].price%></h2>
+                    <p class="product__description"><%=product[i].description%></p>
+                </div>
+                <div class="card__actions">
+                    <button class="btn">Add to Cart</button>
+                </div>
+            </article>
+            <%}%>
+        </div>
+        <%} else { %>
+            <h2>No Products Found</h2>
+        <%}%>
+
+
+    </main>
+</body>
+</html>
