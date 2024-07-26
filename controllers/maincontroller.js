@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const router = express.Router();
 const Products = require('../models/product');
+const Cart = require('../models/cart');
 
 const addProductPage = router.get('/add-product', (req, res) => {
     res.render('./admin/addProducts', {
@@ -63,13 +64,9 @@ const productDetails=router.get('/product-details/:productid',(req,res)=>{
 })
 
 const postCart=router.post('/cart',(req,res)=>{
-    console.log(req.body);
-    Products.findbyId(req.body.productid,product=>{
-        res.render('shop/cart',{
-            docTitle:'Cart',
-            path:'/cart',
-            product:product
-        })
+    console.log(req.body.productId);
+    Products.findbyId(req.body.productId,product=>{
+        Cart.addProduct(product.id,product.price);
     })
 })
 
