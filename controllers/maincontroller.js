@@ -50,19 +50,27 @@ const index = router.get('/', (req, res) => {
     });
 });
 
-const productDetailsPage = router.get('/product-details', (req, res) => {
-    res.render('./shop/product-detail', {
-        docTitle: 'Product Details',
-        path: '/product-details'
-    });
-});
-
 const productDetails=router.get('/product-details/:productid',(req,res)=>{
     const prodID=req.params.productid;
     Products.findbyId(prodID,product=>{
-        console.log(product);
+        res.render('./shop/product-detail',{
+            docTitle:'Product Details',
+            path:'/product-details',
+            prod:product,
+        })
     })
-    res.redirect('/');
+    // res.redirect('/');
+})
+
+const postCart=router.post('/cart',(req,res)=>{
+    console.log(req.body);
+    Products.findbyId(req.body.productid,product=>{
+        res.render('shop/cart',{
+            docTitle:'Cart',
+            path:'/cart',
+            product:product
+        })
+    })
 })
 
 const pageerror = router.use((req, res) => {
@@ -78,6 +86,6 @@ module.exports = {
     cart,
     index,
     productDetails,
-    productDetailsPage,
+    postCart,
     pageerror
 };

@@ -1,6 +1,6 @@
 <%-include('../includes/head.ejs')%>
     <title><%=docTitle%></title>
-    <link rel="stylesheet" href="shop.css">
+    <link rel="stylesheet" href="/shop.css">
 </head>
 <body>
     <header>
@@ -21,7 +21,28 @@
         </nav>
     </header>    
     <main class="main-body">
-        
+        <h1>
+            <%=prod.title%>
+        </h1>
+        <div class="product-info">
+            <div class="image-holder">
+                <img src="<%=prod.imageUrl%>">
+            </div>
+            <div class="product-details">
+                
+                <p>
+                    <%=prod.description%>
+                </p>
+                <br>
+                <p style="color:#016465">
+                    Price: $<%=prod.price%>
+                </p>
+                <form action="/cart" method="post">
+                    <button class="btn">Add To Cart</button>
+                    <input type="hidden" name="productId" value="<%=prod.id%>">
+                </form>
+                
+        </div>
     </main>
 </body>
 </html>
