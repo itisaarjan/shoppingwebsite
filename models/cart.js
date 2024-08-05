@@ -29,6 +29,15 @@ module.exports=class cart{
         })
         
     }
+    static getProducts(cb){
+        fs.readFile(p,(err,fileContent)=>{
+            if(err){
+                cb(null);
+            }else{
+                cb(JSON.parse(fileContent));
+            }
+        })
+    }
     static deleteProduct(id,productPrice){
         fs.readFile(p,(err,fileContent)=>{
             if(err){

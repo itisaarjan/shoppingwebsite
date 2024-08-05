@@ -16,12 +16,22 @@
             </ul>
             </div>
             <div class="cart-icon">
-                <ul><li><a class="<%= path==='/product-details' ? 'active' : '' %>" href="/cart"><img src="/assets/shoppingcart.png" alt="Cart"></a></li></ul>
+                <ul><li><a class="<%= path==='/cart' ? 'active' : '' %>" href="/cart"><img src="/assets/shoppingcart.png" alt="Cart"></a></li></ul>
             </div>
         </nav>
     </header>    
     <main class="main-body">
-        
+        <%if (cart.length>0) { %>
+            <ul>
+                <% cart.forEach(product=>{ %>
+                    <li><%=product.productData.title%> (<%=product.qty%>)</li>
+                <%})%>
+            </ul>
+        <% }else{ %>
+
+            <h1>No products added to the cart</h1>
+
+        <% } %>
     </main>
 </body>
 </html>

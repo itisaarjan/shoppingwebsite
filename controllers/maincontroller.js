@@ -39,9 +39,31 @@ const shopPage = router.get('/product-list', (req, res) => {
 });
 
 const cart = router.get('/cart', (req, res) => {
-    res.render('shop/cart', {
-        docTitle: 'Cart',
-        path: '/cart'
+    Cart.getProducts(cart => {
+        const productArray = [];
+        Products.fetchAll(products => {
+            if (!cart || !cart.products.length) {
+                res.render('shop/cart', {
+                    docTitle: 'Cart',
+                    path: '/cart',
+                    cart: productArray,
+                });
+                return;
+            }
+
+            for (let prod of products) {
+                const cartProductData = cart.products.find(p => p.id === prod.id);
+                if (cartProductData) {
+                    productArray.push({ productData: prod, qty: cartProductData.qty });
+                }
+            }
+
+            res.render('shop/cart', {
+                docTitle: 'Cart',
+                path: '/cart',
+                cart: productArray,
+            });
+        });
     });
 });
 
