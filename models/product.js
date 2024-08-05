@@ -1,23 +1,23 @@
 const fs = require('fs');
 const path = require('path');
-let id=0;
+const cart=require('./cart');
 let products = [];
 
 module.exports = class Product {
-    constructor(title,imageUrl,price,description) {
+    constructor(title, imageUrl, price, description) {
         this.title = title;
-        this.imageUrl=imageUrl;
-        this.price=price;
-        this.description=description;
+        this.imageUrl = imageUrl;
+        this.price = price;
+        this.description = description;
     }
 
     save() {
-        this.id=Math.random().toString();
+        this.id = Math.random().toString();
         const p = path.join(__dirname, '..', 'data', 'products.json');
 
-        fs.readFile(p, (err, filecontent) => {
-            if (!err && filecontent.length > 0) {
-                products = JSON.parse(filecontent);
+        fs.readFile(p, (err, fileContent) => {
+            if (!err && fileContent.length > 0) {
+                products = JSON.parse(fileContent);
             } else {
                 products = [];
             }
@@ -30,13 +30,13 @@ module.exports = class Product {
 
     static fetchAll(cb) {
         const p = path.join(__dirname, '..', 'data', 'products.json');
-        fs.readFile(p, (err, filecontent) => {
-            if (err || filecontent.length === 0) {
+        fs.readFile(p, (err, fileContent) => {
+            if (err || fileContent.length === 0) {
                 cb([]);
             } else {
                 let content;
                 try {
-                    content = JSON.parse(filecontent);
+                    content = JSON.parse(fileContent);
                 } catch (parseError) {
                     content = [];
                 }
@@ -44,10 +44,22 @@ module.exports = class Product {
             }
         });
     }
-    static findbyId(id,cb){
-        this.fetchAll(products=>{
-            const product=products.find(p=>p.id===id);
+
+    static findById(id, cb) {
+        this.fetchAll(products => {
+            const product = products.find(p => p.id === id);
             cb(product);
+        });
+    }
+    static deleteById(id){
+        this.fetchAll(prod=>{
+            const product=prod.find(prod=>prod.id===id);
+            const updatedProducts=prod.find(prod=>prod.id!=id);
+            fs.writeFile(p,JSON.stringify(updatedProducts),err=>{
+                if(!err){
+                    
+                }
+            })
         })
     }
 }

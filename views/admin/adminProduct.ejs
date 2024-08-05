@@ -41,8 +41,10 @@
                     <p class="product__description"><%=truncatedDescription%>></p>
                 </div>
                 <div class="card__actions">
-                    <button class="btn">Edit</button>
-                    <button class="btn">Delete</button>
+                    <a href="/edit-product/<%=product[i].id%>" class="btn">Edit</a>
+                    <form action="/delete/<%=product[i].id%>" method="post">
+                        <button type="submit" class="btn">Delete</button>
+                    </form>
                 </div>
             </article>
             <%}%>

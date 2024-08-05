@@ -24,6 +24,9 @@ app.use(controller.cart);
 app.use(controller.adminpage);
 app.use(controller.postCart);
 app.use(controller.productDetails);
+app.use(controller.editProduct);
+app.use(controller.postEditProduct);
+app.use(controller.deleteProduct);
 app.use(controller.shopPage);
 
 // 404 Page not found handler

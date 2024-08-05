@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const Products = require('../models/product');
 const Cart = require('../models/cart');
+const fs=require('fs');
 
 const addProductPage = router.get('/add-product', (req, res) => {
     res.render('./admin/addProducts', {
@@ -65,15 +66,95 @@ const productDetails=router.get('/product-details/:productid',(req,res)=>{
 
 const postCart=router.post('/cart',(req,res)=>{
     console.log(req.body.productId);
-    Products.findbyId(req.body.productId,product=>{
+    Products.findById(req.body.productId,product=>{
         Cart.addProduct(product.id,product.price);
+    })
+    res.redirect('/');
+})
+const editProduct=router.get('/edit-product/:productid', (req, res) => {
+    const prodid = req.params.productid;
+    Products.findById(prodid, product => {
+        if (!product) {
+            return res.redirect('/');
+        }
+        res.render('./admin/editProduct', {
+            docTitle: 'Edit Product',
+            path: '/edit-product',
+            product: product
+        });
+    });
+});
+const postEditProduct=router.post('/edit-product',(req,res)=>{
+    const prodid=req.body.productId;
+    const p=path.join(__dirname,'..','data','products.json');
+    Products.findById(prodid,product=>{
+        // console.log(product);
+        if(!product){
+            res.redirect('/');
+        }else{
+           fs.readFile(p, (err, fileContent) => {
+                if (err) {
+                    return res.redirect('/');
+                }
+                
+                let products = JSON.parse(fileContent);
+                const existingProductIndex = products.findIndex(prod => prod.id === prodid);
+                
+                if (existingProductIndex >= 0) {
+                    // Update the existing product
+                    products[existingProductIndex].title = req.body.title;
+                    products[existingProductIndex].imageUrl = req.body.imageUrl;
+                    products[existingProductIndex].price = req.body.price;
+                    products[existingProductIndex].description = req.body.description;
+                    
+                    // Write the updated products list back to the file
+                    fs.writeFile(p, JSON.stringify(products), (err) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                        res.redirect('/admin-product');
+                    });
+                } else {
+                    res.redirect('/');
+                }
+            });
+        }
     })
 })
 
+const deleteProduct = router.post('/delete/:productid', (req, res) => {
+    const p = path.join(__dirname, '..', 'data', 'products.json');
+    const prodid = req.params.productid;
+
+    fs.readFile(p, (err, fileContent) => {
+        if (err) {
+            console.error("Error reading file:", err);
+            return res.redirect('/');
+        }
+
+        let products = JSON.parse(fileContent);
+        let index = products.findIndex(p => p.id === prodid);
+        const price=products[index].price;
+        if (index !== -1) {
+            products.splice(index, 1); // Remove the product
+        }
+
+        fs.writeFile(p, JSON.stringify(products), (err) => {
+            if (err) {
+                console.error("Error writing file:", err);
+                return res.redirect('/');
+            }
+            Cart.deleteProduct(prodid,price);
+            res.redirect('/');
+        });
+    });
+});
+// const postDeleteProduct=
 const pageerror = router.use((req, res) => {
     res.status(404).render('pagenotFound', {
         docTitle: 'Page Not Found',
         path:'/404'})});
+
 
 module.exports = {
     adminpage,
@@ -84,5 +165,8 @@ module.exports = {
     index,
     productDetails,
     postCart,
+    editProduct,
+    postEditProduct,
+    deleteProduct,
     pageerror
 };

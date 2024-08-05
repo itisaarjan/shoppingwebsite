@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= docTitle %></title>
+    <link rel="stylesheet" href="editProducts.css">
+</head>
+<body>
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: 'Poppins', sans-serif;
+    background-color: #f1faee;
+}
+.nav-bar {
+    background-color: #006466;
+    width: 100%;
+    margin-top: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    color: white;
+    height: 30%;
+}
+
+.nav-bar ul {
+    display: flex;
+    justify-content: start;
+    gap: 20px;
+    list-style: none;
+    font-weight: 100;
+    padding: 10px;
+}
+
+.nav-bar a {
+    text-decoration: none;
+    border: none;
+    font-size: 25px;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+}
+
+.nav-bar ul li {
+    list-style: none;
+}
+
+.cart-icon {
+    width: 80px;
+    height: 70px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.cart-icon img {
+    width: 100%;
+    height: 100%;
+    /* Apply the filter to change the color to white */
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+a:hover{
+    color:gold;
+}
+a:active{
+    color:purple;
+}
+.main-body{
+    /* padding: 10px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.my-form{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:50px;
+}
+.my-form input{
+    width:40rem;
+    height: 3rem;
+    font-size: 1.4rem;
+    /* height: rem; */
+    text-align: center;
+}
+#product-description{
+    width: 40rem;
+    height: 10rem;
+    font-size: 1.7rem;
+    text-align: center;
+
+}
+.my-form button{
+    width: 10rem;
+    height: 3rem;
+    font-size: 1.5rem;
+    background-color: #006466;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+    </style>
+    <header>
+        <nav class="nav-bar">
+            <div>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/product-list">Shop</a></li>
+                    <li><a class="<%= path === '/add-product' ? 'active' : '' %>" href="/add-product">Add Products</a></li>
+                    <li><a href="/product-details">Product Details</a></li>
+                    <li><a href="/admin-product">Admin Product</a></li>
+                </ul>
+            </div>
+            <div class="cart-icon">
+                <ul>
+                    <li><a href="/cart"><img src="/assets/shoppingcart.png" alt="Cart"></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main class="main-body">
+        <form action="/edit-product" method="post" class="my-form">
+            <input type="hidden" name="productId" value="<%= product.id %>">
+            <input type="text" name="title" id="title" value="<%= product.title %>">
+            <input type="text" name="imageUrl" id="image-url" value="<%= product.imageUrl %>">
+            <input type="text" name="price" id="product-price" value="<%= product.price %>">
+            <input type="text" name="description" id="product-description" value="<%= product.description %>">
+            <!-- <input type="hidden" name="productId" value="<%=product.id%>"> -->
+            <button type="submit">Edit Product</button>
+        </form>
+    </main>
+</body>
+</html>
