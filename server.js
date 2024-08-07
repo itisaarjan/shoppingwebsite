@@ -26,6 +26,7 @@ app.use(controller.postCart);
 app.use(controller.productDetails);
 app.use(controller.editProduct);
 app.use(controller.postEditProduct);
+app.use(controller.deletefromCart);
 app.use(controller.deleteProduct);
 app.use(controller.shopPage);
 

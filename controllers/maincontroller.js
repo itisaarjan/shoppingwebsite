@@ -67,6 +67,21 @@ const cart = router.get('/cart', (req, res) => {
     });
 });
 
+const deletefromCart = router.post('/cart-delete-item', (req, res) => {
+    const prodid = req.body.productId;  // Correctly retrieve the product ID from the body
+    console.log("Product ID to delete:", prodid);
+
+    Products.findById(prodid, product => {
+        if (product) {
+            console.log("Deleting product:", product);
+            Cart.deleteProduct(prodid, product.price);
+        } else {
+            console.log("Product not found, cannot delete");
+        }
+        res.redirect('/cart');
+    });
+});
+
 const index = router.get('/', (req, res) => {
     res.render('./shop/index', {
         docTitle: 'Home',
@@ -189,6 +204,7 @@ module.exports = {
     postCart,
     editProduct,
     postEditProduct,
+    deletefromCart,
     deleteProduct,
     pageerror
 };

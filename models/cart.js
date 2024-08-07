@@ -31,7 +31,7 @@ module.exports=class cart{
     }
     static getProducts(cb){
         fs.readFile(p,(err,fileContent)=>{
-            if(err){
+            if(err || fileContent.length==0){
                 cb(null);
             }else{
                 cb(JSON.parse(fileContent));
